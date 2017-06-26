@@ -1,8 +1,8 @@
 Package: PredPsych
 Type: Package
 Title: Predictive Approaches in Psychology
-Version: 0.1
-Date: 2017-02-13
+Version: 0.2
+Date: 2017-05-25
 Author: Atesh Koul
 Maintainer: Atesh Koul <atesh.koul@gmail.com>
 Description: 
@@ -17,10 +17,10 @@ License: GPL-3
 LazyData: TRUE
 Depends: R (>= 3.1.0)
 Imports: plyr, ggplot2, caret, rpart, e1071, mclust, MASS, party,
-        randomForest
+        randomForest, statmod
 RoxygenNote: 5.0.1
 Suggests: knitr, rmarkdown
 Repository: CRAN
 NeedsCompilation: no
-Packaged: 2017-02-14 19:30:34 UTC; koul
-Date/Publication: 2017-02-15 09:59:53
+Packaged: 2017-06-26 10:53:40 UTC; koul
+Date/Publication: 2017-06-26 13:57:41 UTC
