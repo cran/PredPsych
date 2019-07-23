@@ -4,16 +4,17 @@
 \alias{LinearDA}
 \title{Cross-validated Linear Discriminant Analysis}
 \usage{
-LinearDA(Data, classCol, selectedCols, cvType, nTrainFolds, ntrainTestFolds,
-  modelTrainFolds, foldSep, CV = FALSE, cvFraction, extendedResults = FALSE,
-  SetSeed = TRUE, silent = FALSE, NewData = NULL, ...)
+LinearDA(Data, classCol, selectedCols, cvType, nTrainFolds,
+  ntrainTestFolds, modelTrainFolds, foldSep, CV = FALSE, cvFraction,
+  extendedResults = FALSE, SetSeed = TRUE, silent = FALSE,
+  NewData = NULL, ...)
 }
 \arguments{
 \item{Data}{(dataframe) Data dataframe}
 
-\item{classCol}{(numeric)  column number that contains the variable to be predicted}
+\item{classCol}{(numeric or string)  column number that contains the variable to be predicted}
 
-\item{selectedCols}{(optional) (numeric)  all the columns of data that would be used either as predictor or as feature}
+\item{selectedCols}{(optional) (numeric or string) all the columns of data that would be used either as predictor or as feature}
 
 \item{cvType}{(optional) (string) which type of cross-validation scheme to follow; One of the following values:
 \itemize{
@@ -104,15 +105,14 @@ selectedCols = c(1,2,12,22,32,42,52,62,72,82,92,102,112),
 extendedResults = FALSE,cvType = "folds",nTrainFolds=10,silent = TRUE)
 
 }
-\author{
-Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
-
-\email{atesh.koul@iit.it}
-}
 \references{
 Fisher, R. A. (1936). The Use of Multiple Measurements in Taxonomic Problems. Annals of Eugenics, 7(2), 179-188.
 
 Rao, C. (1948). The Utilization of Multiple Measurements in Problems of Biological Classification. 
 In Journal of the Royal Statistical Society. Series B (Methodological) (Vol. 10, pp. 159-203).
 }
+\author{
+Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
 
+\email{atesh.koul@gmail.com}
+}

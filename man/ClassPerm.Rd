@@ -5,14 +5,14 @@
 \title{Permutation Analysis for classification}
 \usage{
 ClassPerm(Data, classCol, selectedCols, classifierFun, nSims = 1000,
-  plot = TRUE, silent = FALSE, ...)
+  plot = TRUE, silent = FALSE, progress_bar = progress_time(), ...)
 }
 \arguments{
 \item{Data}{(dataframe) dataframe of the data}
 
-\item{classCol}{(numeric) column number that contains the variable to be predicted}
+\item{classCol}{(numeric or string) column number that contains the variable to be predicted}
 
-\item{selectedCols}{(optional) (numeric) all the columns of data that would be used either as predictor or as feature}
+\item{selectedCols}{(optional) (numeric or string) all the columns of data that would be used either as predictor or as feature}
 
 \item{classifierFun}{(optional) (function) classifier function}
 
@@ -21,6 +21,8 @@ ClassPerm(Data, classCol, selectedCols, classifierFun, nSims = 1000,
 \item{plot}{(optional) (logical) whether to plot null accuracy distribution}
 
 \item{silent}{(optional) (logical) whether to print messages or not}
+
+\item{progress_bar}{(optional) the type of progress bar to be utilized}
 
 \item{...}{(optional) additional arguments for the function}
 }
@@ -96,11 +98,6 @@ shuffling the labels of the dataset (i.e. randomly shuffling classes/conditions 
 
 
 }
-\author{
-Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
-
-\email{atesh.koul@iit.it}
-}
 \references{
 Phipson, B., & Smyth, G. K. (2010). Permutation P-values Should Never Be Zero: Calculating Exact P-values When Permutations Are Randomly Drawn. 
 Statistical Applications in Genetics and Molecular Biology, 9(1), 1544-6115.
@@ -109,4 +106,8 @@ Ojala, M. & Garriga, G. C. Permutation Tests for Studying Classifier Performance
 
 Good, P. (2005). Permutation, Parametric and Bootstrap Tests of Hypotheses. New York: Springer-Verlag.
 }
+\author{
+Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
 
+\email{atesh.koul@gmail.com}
+}

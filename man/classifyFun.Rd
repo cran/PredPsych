@@ -4,18 +4,18 @@
 \alias{classifyFun}
 \title{Generic Classification Analyses}
 \usage{
-classifyFun(Data, classCol, selectedCols, cvType, ntrainTestFolds, nTrainFolds,
-  modelTrainFolds, nTuneFolds, tuneFolds, foldSep, cvFraction, ranges = NULL,
-  tune = FALSE, cost = 1, gamma = 0.5, classifierName = "svm",
-  genclassifier, silent = FALSE, extendedResults = FALSE, SetSeed = TRUE,
-  NewData = NULL, ...)
+classifyFun(Data, classCol, selectedCols, cvType, ntrainTestFolds,
+  nTrainFolds, modelTrainFolds, nTuneFolds, tuneFolds, foldSep, cvFraction,
+  ranges = NULL, tune = FALSE, cost = 1, gamma = 0.5,
+  classifierName = "svm", genclassifier, silent = FALSE,
+  extendedResults = FALSE, SetSeed = TRUE, NewData = NULL, ...)
 }
 \arguments{
 \item{Data}{(dataframe) dataframe of the data}
 
-\item{classCol}{(numeric) column number that contains the variable to be predicted}
+\item{classCol}{(numeric or string) column number that contains the variable to be predicted}
 
-\item{selectedCols}{(optional) (numeric) all the columns of data that would be used either as predictor or as feature}
+\item{selectedCols}{(optional) (numeric or string) all the columns of data that would be used either as predictor or as feature}
 
 \item{cvType}{(optional) (string) which type of cross-validation scheme to follow; One of the following values:
 \itemize{
@@ -117,11 +117,6 @@ cvType = "folds",extendedResults = TRUE,tune=TRUE)
 
 
 }
-\author{
-Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
-
-\email{atesh.koul@iit.it}
-}
 \references{
 Duda, R. O., Hart, P. E., & Stork, D. G. (2000). Pattern Classification. Wiley-Interscience (Vol. 24).
 
@@ -129,4 +124,8 @@ Vapnik, V. (1995). The Nature of statistical Learning Theory. Springer-Verlag Ne
 
 Hsu, C. C., Chang, C. C., & Lin, C. C. (2003). A practical guide to support vector classification, 1(1), 1-16.
 }
+\author{
+Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
 
+\email{atesh.koul@gmail.com}
+}

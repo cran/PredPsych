@@ -42,15 +42,14 @@ GripAperture <- DimensionRed(KinData,selectedCols = 12:21,
 outcome = KinData[,"Object.Size"],plot = TRUE)
 
 }
-\author{
-Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
-
-\email{atesh.koul@iit.it}
-}
 \references{
 Bishop, C. M. (2006). Pattern Recognition and Machine Learning. (M. Jordan, J. Kleinberg, & B. Scholkopf, Eds.) 
 (1st ed.). Springer-Verlag New York.
 
 Cox, T. F., & Cox, M. A. A. (2000). Multidimensional scaling (Second ed.). Chapman & Hall/CRC.
 }
+\author{
+Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
 
+\email{atesh.koul@gmail.com}
+}

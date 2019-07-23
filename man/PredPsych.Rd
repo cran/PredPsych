@@ -11,14 +11,13 @@ PredPsych.
 \details{
 "PredPsych" is a user-friendly, R toolbox based on machine learning predictive algorithms.
 }
-\author{
-Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
-
-\email{atesh.koul@iit.it}
-}
 \references{
 Koul, A., Becchio, C., & Cavallo, A. (2017, March 21). 
 PredPsych: A toolbox for predictive machine learning based approach in experimental 
 psychology research. Retrieved from osf.io/preprints/psyarxiv/pvjac
 }
+\author{
+Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
 
+\email{atesh.koul@gmail.com}
+}

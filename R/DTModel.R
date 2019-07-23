@@ -4,8 +4,8 @@
 #' A simple function to create Decision Trees
 #' 
 #' @param Data                (dataframe) a data frame with regressors and response
-#' @param classCol            (numeric) which column should be used as response col
-#' @param selectedCols        (optional)(numeric) which columns should be treated as data(features + response) (defaults to all columns)
+#' @param classCol            (numeric or string) which column should be used as response col
+#' @param selectedCols        (optional) (numeric or string) which columns should be treated as data(features + response) (defaults to all columns)
 #' @param tree                           which decision tree model to implement; One of the following values:
 #'      \itemize{
 #'      \item CART        =   Classification And Regression Tree; 
@@ -99,7 +99,7 @@
 #' @author
 #' Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
 #'
-#' \email{atesh.koul@@iit.it}
+#' \email{atesh.koul@@gmail.com}
 #' 
 #' @references 
 #' Hastie, T., Tibshirani, R., & Friedman, J. (2009). The Elements of Statistical Learning. 
@@ -131,24 +131,53 @@ DTModel <- function(Data,classCol,selectedCols,tree,cvType,nTrainFolds,ntrainTes
   # and sampling is done within these subgroups (see ?createDataPartition for more details)
   # 
   # Make the outcome factor anyways
+  # Modified so that it works even with tibble; force the tibble to be a dataframe
+  # This is not the best way to proceed; Ideally, all the code should be updated 
+  # to work with tibble
+  # make it a bit generic to handle matrices as well along with a warning 
+  permittedDataClass <- c("tbl_df","matrix")
+  if(any(permittedDataClass %in% class(Data))){
+    warning(cat("the data entered is of the class ",class(Data),". Coersing it to be a dataframe. Check results"))
+    Data <- as.data.frame(Data)
+  }
+  
+  # get the classCol name:  in case u enter names of columns, it works anyways
+  # ensures that we have both correct classCol and responseColName as the function expects
+  if(is.character(classCol)){
+    responseColName <- classCol
+    classCol <- grep(responseColName,names(Data))
+  }else    responseColName <- names(Data)[classCol]
+  
+  
   Data[,classCol] <- factor(Data[,classCol])
   
   
   switch(tree,
          CART = {
-           #library(rpart)
-           selectedColNames <- names(Data)[selectedCols]
-           featureColNames <- selectedColNames[-grep(names(Data)[classCol],selectedColNames)]
-           responseColName <- names(Data)[classCol]
+           if(missing(selectedCols))  selectedCols <- 1:length(names(Data))
+           # get the features:  in case u enter names of columns, it works anyways
+           ifelse(is.character(selectedCols),selectedColNames <- selectedCols,selectedColNames <- names(Data)[selectedCols])
            
-           if(!missing(cvType)) stop(cat("cvType provided (",cvType,") is different from holdout. Did you want to perform crossvalidation? 
+           # old way
+           # selectedColNames <- names(Data)[selectedCols]
+           # 
+            
+           # protection measure if u forgot to put predictor column in the selected list
+           if(!(responseColName %in% selectedColNames)) stop("\n Response Column name not present in selected column name list")
+           
+           
+           
+           featureColNames <- selectedColNames[-grep(names(Data)[classCol],selectedColNames)]
+           
+           # old way - already implemented above
+           # responseColName <- names(Data)[classCol]
+           
+           if(!missing(cvType)) stop(cat("cvType provided (",cvType,"). Did you want to perform crossvalidation? 
             Please Use tree = CARTNACV or tree = CARTCV for Cross-validated CART"))
            
            
            
            if(!silent) cat("Generating Model Tree\n")
-           
-           if(!silent) cat("\nPerforming holdout Cross-validation\n")
            
            # See the argument tree = 'CARTCV' for  cross validation 
            # if(missing(cvFraction)){
@@ -165,7 +194,7 @@ DTModel <- function(Data,classCol,selectedCols,tree,cvType,nTrainFolds,ntrainTes
            # Full tree
            #fit <- rpart(as.formula(paste(responseColName,"~",paste0(featureColNames,collapse = "+"))),data=DataModel[,selectedCols],method = 'class')  
            
-           fit <- rpart(as.formula(paste(responseColName,"~",paste0(featureColNames,collapse = "+"))),data=Data[,selectedCols],method = 'class')  
+           fit <- rpart(as.formula(paste(responseColName,"~",paste0(featureColNames,collapse = "+"))),data=Data[,selectedCols],method = 'class',...)  
            #summary(fit)
            cp = fit$cptable[which( fit$cptable[,'xerror']==min(fit$cptable[,'xerror'])),'CP']
            prunedModelF <- prune(fit,cp=cp)
@@ -203,8 +232,9 @@ DTModel <- function(Data,classCol,selectedCols,tree,cvType,nTrainFolds,ntrainTes
            # }else return(accTest)
            # 
            
-           
-           return(fit)
+           # Just to keep it consistent with outputs from other tree types
+           Results <- list(fit = fit)
+           return(Results)
            
            if(!silent) print('done')
            },
@@ -247,10 +277,19 @@ DTModel <- function(Data,classCol,selectedCols,tree,cvType,nTrainFolds,ntrainTes
            return(Results)
          },
          CF = {# Cluster tree
+           
            #library(party)
-           selectedColNames <- names(Data)[selectedCols]
+           if(missing(selectedCols))  selectedCols <- 1:length(names(Data))
+           # get the features:  in case u enter names of columns, it works anyways
+           ifelse(is.character(selectedCols),selectedColNames <- selectedCols,selectedColNames <- names(Data)[selectedCols])
+           
+           # old way
+           # selectedColNames <- names(Data)[selectedCols]
+           
            featureColNames <- selectedColNames[-grep(names(Data)[classCol],selectedColNames)]
-           responseColName <- names(Data)[classCol]
+           
+           # old way - already implemented above
+           # responseColName <- names(Data)[classCol]
            if(!silent) print("Generating conditional inference framework Tree")
            # remove NAs as I use a stratified cross validation (may not be necessary)
            DatNoNA <- Data[!is.na(Data[,classCol]),]
@@ -263,10 +302,15 @@ DTModel <- function(Data,classCol,selectedCols,tree,cvType,nTrainFolds,ntrainTes
            if(!silent) print('done')
            return(fit)},
          RF = {  # Random forest
-           #library(randomForest)
-           selectedColNames <- names(Data)[selectedCols]
+           if(missing(selectedCols))  selectedCols <- 1:length(names(Data))
+           # get the features:  in case u enter names of columns, it works anyways
+           ifelse(is.character(selectedCols),selectedColNames <- selectedCols,selectedColNames <- names(Data)[selectedCols])
+           
+           # old way
+           # selectedColNames <- names(Data)[selectedCols]
            featureColNames <- selectedColNames[-grep(names(Data)[classCol],selectedColNames)]
-           responseColName <- names(Data)[classCol]
+           # old way - already implemented above
+           # responseColName <- names(Data)[classCol]
            if(!silent) print("Generating Random Forest Tree")
            # remove NAs as I use a stratified cross validation (may not be necessary)
            DatNoNA <- Data[!is.na(Data[,classCol]),]
@@ -282,15 +326,36 @@ DTModel <- function(Data,classCol,selectedCols,tree,cvType,nTrainFolds,ntrainTes
 }
 
 cv.CART <- function(Data,classCol,selectedCols,cvType,ntrainTestFolds,modelTrainFolds,nTrainFolds,
-                    foldSep,cvFraction,extendedResults = FALSE,silent=FALSE,NewData=NULL,...){
-  # if nothing specific is provided, default to all the columns
-  if(missing(selectedCols))  selectedCols <- 1:length(names(Data))
+                    foldSep,cvFraction,extendedResults = FALSE,silent=FALSE,NewData=NULL,SetSeed=SetSeed,...){
+  
   
   if(!(cvType %in% c("holdout","folds","LOSO","LOTO"))) stop(cat("\n cvType is not one of holdout,folds or LOSO. You provided",cvType))
   
-  # get the features
-  selectedColNames <- names(Data)[selectedCols]
-  responseColName <- names(Data)[classCol]
+  if(SetSeed)  set.seed(111)
+  
+  # get the classCol name:  in case u enter names of columns, it works anyways
+  # ensures that we have both correct classCol and responseColName as the function expects
+  if(is.character(classCol)){
+    responseColName <- classCol
+    classCol <- grep(responseColName,names(Data))
+  }else    responseColName <- names(Data)[classCol]
+  
+  # old way - already implemented above
+  # responseColName <- names(Data)[classCol]
+  
+  # if nothing specific is provided, default to all the columns
+  if(missing(selectedCols))  selectedCols <- 1:length(names(Data))
+  
+  # get the features:  in case u enter names of columns, it works anyways
+  ifelse(is.character(selectedCols),selectedColNames <- selectedCols,selectedColNames <- names(Data)[selectedCols])
+  
+  # old way
+  # selectedColNames <- names(Data)[selectedCols]
+  
+  
+  
+  # protection measure if u forgot to put predictor column in the selected list
+  if(!(responseColName %in% selectedColNames)) stop("\n Response Column name not present in selected column name list")
   
   # make it a factor anyways
   Data[,classCol] <- factor(Data[,classCol])
@@ -331,7 +396,8 @@ cv.CART <- function(Data,classCol,selectedCols,cvType,ntrainTestFolds,modelTrain
              testDataFold <- ModelTrainData[trainIndexModel==i,]
              
              # CV = FALSE as we don't want leave-one-trial out cv
-             fit <- rpart(as.formula(paste(responseColName,"~",paste0(featureColNames,collapse = "+"))),data=trainDataFold[,selectedCols],method = 'class')
+             fit <- rpart(as.formula(paste(responseColName,"~",paste0(featureColNames,collapse = "+"))),
+                          data=trainDataFold[,selectedCols],method = 'class',...)
              
              # The predict funcion redirects based on the class of the object
              # predict as a function thus becomes variable in it's output and 
@@ -391,7 +457,8 @@ cv.CART <- function(Data,classCol,selectedCols,cvType,ntrainTestFolds,modelTrain
              testData <- Data[Data[,foldSep]==Subs[i],]
              
              # CV = FALSE as we don't want leave-one-trial out cv
-             fit <- rpart(as.formula(paste(responseColName,"~",paste0(featureColNames,collapse = "+"))),data=trainData[,selectedCols],method = 'class')
+             fit <- rpart(as.formula(paste(responseColName,"~",paste0(featureColNames,collapse = "+"))),
+                          data=trainData[,selectedCols],method = 'class',...)
              
              # The predict funcion redirects based on the class of the object
              # predict as a function thus becomes variable in it's output and 
@@ -438,7 +505,8 @@ cv.CART <- function(Data,classCol,selectedCols,cvType,ntrainTestFolds,modelTrain
            testData <- Data[!(1:nrow(Data) %in% index$Resample1),]
            cat("Proportion of Test/Train Data was : ",nrow(testData)/nrow(trainData),"\n")
            
-           fit <- rpart(as.formula(paste(responseColName,"~",paste0(featureColNames,collapse = "+"))),data=trainData[,selectedCols],method = 'class')
+           fit <- rpart(as.formula(paste(responseColName,"~",paste0(featureColNames,collapse = "+"))),
+                        data=trainData[,selectedCols],method = 'class',...)
            
            # The predict funcion redirects based on the class of the object
            # predict as a function thus becomes variable in it's output and 
@@ -467,7 +535,7 @@ cv.CART <- function(Data,classCol,selectedCols,cvType,ntrainTestFolds,modelTrain
            prunedModel <- prune(fit,cp=cp)
            
            plot(prunedModel, uniform=TRUE,
-                main="Pruned Classification Tree (without Missing)")
+                main="Pruned Classification Tree")
            text(prunedModel, use.n=TRUE, all=TRUE, cex=.8)
            if(!silent) print(prunedModel)
            
@@ -483,7 +551,8 @@ cv.CART <- function(Data,classCol,selectedCols,cvType,ntrainTestFolds,modelTrain
              trainData <- Data[-i,]
              testData <-  Data[i,]
              
-             fit <- rpart(as.formula(paste(responseColName,"~",paste0(featureColNames,collapse = "+"))),data=trainData[,selectedCols],method = 'class')
+             fit <- rpart(as.formula(paste(responseColName,"~",paste0(featureColNames,collapse = "+"))),
+                          data=trainData[,selectedCols],method = 'class',...)
              
              # The predict funcion redirects based on the class of the object
              # predict as a function thus becomes variable in it's output and 

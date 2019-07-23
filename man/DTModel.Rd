@@ -12,9 +12,9 @@ DTModel(Data, classCol, selectedCols, tree, cvType, nTrainFolds,
 \arguments{
 \item{Data}{(dataframe) a data frame with regressors and response}
 
-\item{classCol}{(numeric) which column should be used as response col}
+\item{classCol}{(numeric or string) which column should be used as response col}
 
-\item{selectedCols}{(optional)(numeric) which columns should be treated as data(features + response) (defaults to all columns)}
+\item{selectedCols}{(optional) (numeric or string) which columns should be treated as data(features + response) (defaults to all columns)}
 
 \item{tree}{which decision tree model to implement; One of the following values:
 \itemize{
@@ -119,11 +119,6 @@ selectedCols = c(1,2,12,22,32,42,52,62,72,82,92,102,112),
 tree='CARTCV',cvType="folds")
 
 }
-\author{
-Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
-
-\email{atesh.koul@iit.it}
-}
 \references{
 Hastie, T., Tibshirani, R., & Friedman, J. (2009). The Elements of Statistical Learning. 
 Springer Series in Statistics (2nd ed., Vol. 1). New York, NY: Springer New York.
@@ -134,4 +129,8 @@ R package version 4.1-10.  https://CRAN.R-project.org/package=rpart
 Therneau, T. M., & Atkinson, E. J. (1997). An introduction to recursive partitioning using the RPART routines (Vol. 61, p. 452).
 Mayo Foundation: Technical report.
 }
+\author{
+Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
 
+\email{atesh.koul@gmail.com}
+}

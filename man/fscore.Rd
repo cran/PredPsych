@@ -36,11 +36,6 @@ fscore(KinData,classCol = 1,featureCol = c(2,12,22,32,42,52,62,72,82,92,102,112)
 # --f-scores--
 
 }
-\author{
-Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
-
-\email{atesh.koul@iit.it}
-}
 \references{
 Duda, R. O., Hart, P. E., & Stork, D. G. (2000). Pattern Classification. Wiley-Interscience (Vol. 24).
 
@@ -49,4 +44,8 @@ In I. Guyon, M. Nikravesh, S. Gunn, & L. A. Zadeh (Eds.),
 Feature Extraction: Foundations and Applications (Vol. 324, pp. 315-324). 
 Berlin, Heidelberg: Springer Berlin Heidelberg.
 }
+\author{
+Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
 
+\email{atesh.koul@gmail.com}
+}

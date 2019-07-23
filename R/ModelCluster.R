@@ -29,7 +29,7 @@
 #'@author
 #'Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
 #'
-#'\email{atesh.koul@@iit.it}
+#'\email{atesh.koul@@gmail.com}
 #'
 #'
 #'@references 
@@ -41,7 +41,7 @@
 #'
 #' @export
 ModelCluster <- function(Data,NewData=NULL,G,silent=FALSE,...){
-  #library(mclust)
+  
   if(!silent) cat("\nPerforming Cluster analysis \n\n")
 
   set.seed(111)

@@ -26,6 +26,5 @@ A function to generate predictions on a new dataset based on a previously estima
 \author{
 Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
 
-\email{atesh.koul@iit.it}
+\email{atesh.koul@gmail.com}
 }
-

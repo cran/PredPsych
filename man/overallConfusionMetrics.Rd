@@ -73,11 +73,6 @@ overallConfusionMetrics(Results$ConfMatrix)
 
 
 }
-\author{
-Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
-
-\email{atesh.koul@iit.it}
-}
 \references{
 Kelleher, J. D., Namee, B. Mac & D'Arcy, A. Fundamentals of Machine Learning for Predictive Data Analytics. (The MIT Press, 2015).
 Section 8.4.1.2
@@ -86,4 +81,8 @@ pp. 4
 
 Forman, G. & Scholz, M. Apples-to-apples in cross-validation studies. ACM SIGKDD Explor. Newsl. 12, 49 (2010).
 }
+\author{
+Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
 
+\email{atesh.koul@gmail.com}
+}

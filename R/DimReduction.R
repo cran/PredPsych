@@ -31,7 +31,7 @@
 #'@author
 #'Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
 #'
-#'\email{atesh.koul@@iit.it}
+#'\email{atesh.koul@@gmail.com}
 #'
 #'@references 
 #'Bishop, C. M. (2006). Pattern Recognition and Machine Learning. (M. Jordan, J. Kleinberg, & B. Scholkopf, Eds.) 

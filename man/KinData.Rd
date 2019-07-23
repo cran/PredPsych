@@ -52,4 +52,3 @@ data(KinData)
 }
 }
 \keyword{datasets}
-

@@ -3,12 +3,13 @@
 #' simple function to create permutation testing of a classifier
 #' 
 #' @param Data            (dataframe) dataframe of the data
-#' @param classCol        (numeric) column number that contains the variable to be predicted
-#' @param selectedCols    (optional) (numeric) all the columns of data that would be used either as predictor or as feature
+#' @param classCol        (numeric or string) column number that contains the variable to be predicted
+#' @param selectedCols    (optional) (numeric or string) all the columns of data that would be used either as predictor or as feature
 #' @param classifierFun   (optional) (function) classifier function
 #' @param nSims           (optional) (numeric) number of simulations
 #' @param plot            (optional) (logical) whether to plot null accuracy distribution
-#' @param silent             (optional) (logical) whether to print messages or not
+#' @param silent          (optional) (logical) whether to print messages or not
+#' @param progress_bar    (optional) the type of progress bar to be utilized
 #' @param ...             (optional) additional arguments for the function
 #'
 #' @details 
@@ -83,7 +84,7 @@
 #'@author
 #'Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
 #'
-#'\email{atesh.koul@@iit.it}
+#'\email{atesh.koul@@gmail.com}
 #'
 #'@references 
 #'Phipson, B., & Smyth, G. K. (2010). Permutation P-values Should Never Be Zero: Calculating Exact P-values When Permutations Are Randomly Drawn. 
@@ -94,7 +95,7 @@
 #'Good, P. (2005). Permutation, Parametric and Bootstrap Tests of Hypotheses. New York: Springer-Verlag.
 #'
 #' @export
-ClassPerm <- function(Data,classCol,selectedCols,classifierFun,nSims=1000,plot=TRUE,silent=FALSE,...){
+ClassPerm <- function(Data,classCol,selectedCols,classifierFun,nSims=1000,plot=TRUE,silent=FALSE,progress_bar=progress_time(),...){
   # classifierFun is a function that the use inputs to calculate the permutation scores
   # The form of this function should return accuracy as a single value.
   # Extra options should be specified in the classifier function
@@ -110,9 +111,35 @@ ClassPerm <- function(Data,classCol,selectedCols,classifierFun,nSims=1000,plot=T
   # extras <- match.call(expand.dots= F)$...
   if(!silent) cat("\nPerforming Permutation Analysis for Classification \n\n")
   
+  # Modified so that it works even with tibble; force the tibble to be a dataframe
+  # This is not the best way to proceed; Ideally, all the code should be updated 
+  # to work with tibble
+  # make it a bit generic to handle matrices as well along with a warning 
+  permittedDataClass <- c("tbl_df","matrix")
+  if(any(permittedDataClass %in% class(Data))){
+    warning(cat("the data entered is of the class ",class(Data),". Coersing it to be a dataframe. Check results"))
+    Data <- as.data.frame(Data)
+  }
+  
+  # get the classCol name:  in case u enter names of columns, it works anyways
+  # ensures that we have both correct classCol and predictorColNames as the function expects
+  if(is.character(classCol)){
+    predictorColNames <- classCol
+    classCol <- grep(predictorColNames,names(Data))
+  }else    predictorColNames <- names(Data)[classCol]
+
+  
   if(missing(selectedCols))  selectedCols <- 1:length(names(Data))
   
-  selectedColNames <- names(Data)[selectedCols]
+  # get the features:  in case u enter names of columns, it works anyways
+  ifelse(is.character(selectedCols),selectedColNames <- selectedCols,selectedColNames <- names(Data)[selectedCols])
+  
+  # old way
+  # selectedColNames <- names(Data)[selectedCols]
+  
+  # protection measure if u forgot to put predictor column in the selected list
+  if(!(predictorColNames %in% selectedColNames)) stop("\n Predictor Column name not present in selected column name list")
+  
   # get feature columns without response
   featureColNames <- selectedColNames[-grep(names(Data)[classCol],selectedColNames)]
   
@@ -164,7 +191,7 @@ ClassPerm <- function(Data,classCol,selectedCols,classifierFun,nSims=1000,plot=T
   
   # to avoid the note in R CMD check
   nullAcc <- NULL
-  distNull <- data.frame(nullAcc=unlist(rlply(nSims, permutator(Data,classCol,selectedCols),.progress = progress_time())))
+  distNull <- data.frame(nullAcc=unlist(rlply(nSims, permutator(Data,classCol,selectedCols),.progress = progress_bar)))
   
   # calculate the number of times, the test statistic was greate than observed one
   B <- sum(distNull$nullAcc >= actualAcc)
@@ -283,10 +310,28 @@ LinearSVM <- function(Data,classCol,selectedCols,SetSeed = T,silent,...){
   #library(e1071)
   #set.seed(111)
   # defaults to 10 fold cross validation
-  selectedColNames <- names(Data)[selectedCols]
+  
+  
+  
+  # get the features:  in case u enter names of columns, it works anyways
+  ifelse(is.character(selectedCols),selectedColNames <- selectedCols,selectedColNames <- names(Data)[selectedCols])
+  
+  # old way
+  # selectedColNames <- names(Data)[selectedCols]
+  
   # get feature columns without response
   featureColNames <- selectedColNames[-match(names(Data)[classCol],selectedColNames)]
-  predictorColNames <- names(Data)[classCol]
+  
+  
+  # get the classCol name:  in case u enter names of columns, it works anyways
+  # ensures that we have both correct classCol and predictorColNames as the function expects
+  if(is.character(classCol)){
+    predictorColNames <- classCol
+    classCol <- grep(predictorColNames,names(Data))
+  }else    predictorColNames <- names(Data)[classCol]
+  
+  # old way
+  # predictorColNames <- names(Data)[classCol]
   
   Data = Data[,selectedCols]
   Data[,predictorColNames] = factor(Data[,predictorColNames])
