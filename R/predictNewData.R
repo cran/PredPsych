@@ -11,7 +11,7 @@
 #'  
 #' @return Predictions for each case in the NewData. 
 #'
-#' @import MASS e1071
+#' @import MASS 
 #' @author
 #' Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
 #'

@@ -4,10 +4,23 @@
 \alias{DTModel}
 \title{Generic Decision Tree Function}
 \usage{
-DTModel(Data, classCol, selectedCols, tree, cvType, nTrainFolds,
-  ntrainTestFolds, modelTrainFolds, foldSep, cvFraction,
-  extendedResults = FALSE, SetSeed = TRUE, silent = FALSE,
-  NewData = NULL, ...)
+DTModel(
+  Data,
+  classCol,
+  selectedCols,
+  tree,
+  cvType,
+  nTrainFolds,
+  ntrainTestFolds,
+  modelTrainFolds,
+  foldSep,
+  cvFraction,
+  extendedResults = FALSE,
+  SetSeed = TRUE,
+  silent = FALSE,
+  NewData = NULL,
+  ...
+)
 }
 \arguments{
 \item{Data}{(dataframe) a data frame with regressors and response}

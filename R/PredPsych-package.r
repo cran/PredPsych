@@ -1,7 +1,6 @@
 #' PredPsych.
 #'
 #' @name PredPsych
-#' @docType package
 #' @details 
 #' "PredPsych" is a user-friendly, R toolbox based on machine learning predictive algorithms.
 #' 
@@ -15,7 +14,7 @@
 #' PredPsych: A toolbox for predictive machine learning based approach in experimental 
 #' psychology research. Retrieved from osf.io/preprints/psyarxiv/pvjac
 #' 
-NULL
+"_PACKAGE"
 
 #' Kinematics Dataset
 #' A dataset containing part of the motion capture dataset freely available 

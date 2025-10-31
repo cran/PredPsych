@@ -1,9 +1,12 @@
 Package: PredPsych
 Type: Package
 Title: Predictive Approaches in Psychology
-Version: 0.4
-Date: 2019-07-23
-Author: Atesh Koul
+Version: 0.5
+Date: 2025-10-31
+Authors@R: person(given = "Atesh",
+                  family = "Koul",
+                  role = c("aut", "cre"),
+                  email = "atesh.koul@gmail.com")
 Maintainer: Atesh Koul <atesh.koul@gmail.com>
 Description: 
     Recent years have seen an increased interest in novel methods
@@ -18,9 +21,11 @@ LazyData: TRUE
 Depends: R (>= 3.5.0)
 Imports: plyr, ggplot2, caret, rpart, e1071, mclust, MASS, party,
         randomForest, statmod
-RoxygenNote: 6.1.1
+Encoding: UTF-8
+RoxygenNote: 7.3.3
 Suggests: knitr, rmarkdown
 Repository: CRAN
 NeedsCompilation: no
-Packaged: 2019-07-23 08:03:32 UTC; AKoul
-Date/Publication: 2019-07-23 08:20:05 UTC
+Packaged: 2025-10-31 15:39:34 UTC; Atesh
+Date/Publication: 2025-10-31 16:00:17 UTC
+Author: Atesh Koul [aut, cre]

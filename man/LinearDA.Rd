@@ -4,10 +4,23 @@
 \alias{LinearDA}
 \title{Cross-validated Linear Discriminant Analysis}
 \usage{
-LinearDA(Data, classCol, selectedCols, cvType, nTrainFolds,
-  ntrainTestFolds, modelTrainFolds, foldSep, CV = FALSE, cvFraction,
-  extendedResults = FALSE, SetSeed = TRUE, silent = FALSE,
-  NewData = NULL, ...)
+LinearDA(
+  Data,
+  classCol,
+  selectedCols,
+  cvType,
+  nTrainFolds,
+  ntrainTestFolds,
+  modelTrainFolds,
+  foldSep,
+  CV = FALSE,
+  cvFraction,
+  extendedResults = FALSE,
+  SetSeed = TRUE,
+  silent = FALSE,
+  NewData = NULL,
+  ...
+)
 }
 \arguments{
 \item{Data}{(dataframe) Data dataframe}

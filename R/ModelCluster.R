@@ -25,7 +25,7 @@
 #'# Output:
 #'# Performing Cluster analysis 
 #'# --cluster Results --
-#' @import mclust
+#' @importFrom mclust Mclust
 #'@author
 #'Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
 #'

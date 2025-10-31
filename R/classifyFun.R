@@ -83,7 +83,8 @@
 #'
 #'
 #'
-#' @import e1071 caret
+#' @importFrom e1071 svm tune
+#' @import caret
 #' @author
 #' Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
 #' 
@@ -102,7 +103,7 @@ classifyFun <- function(Data,classCol,selectedCols,cvType,ntrainTestFolds,nTrain
                         SetSeed=TRUE,NewData=NULL,...){
 
   
-  #library(e1071)
+  #
   #library(caret)
   # dont use a constant set.seed with permutation testing
   # u will get a constant accuracy!!
@@ -442,13 +443,13 @@ getTunedParam <- function(tuneTrainData,classCol,classifierName,featureColNames,
   # only in case of svm, suggest
   if(classifierName=="svm"){
     if (is.null(ranges)) ranges = list(gamma = 2^(-1:1), cost = 2^(2:4))
-    obj <- tune(classifierFun, train.y = tuneTrainData[,classCol],train.x = tuneTrainData[,featureColNames],
-                ranges = ranges,tunecontrol = tune.control(sampling = "fix"))
+    obj <- e1071::tune(classifierFun, train.y = tuneTrainData[,classCol],train.x = tuneTrainData[,featureColNames],
+                ranges = ranges,tunecontrol = e1071::tune.control(sampling = "fix"))
   } else if(classifierName=="knn3") {
     # chgoose range of k
     if (is.null(ranges)) ranges = 1:10
-    obj <- tune.knn(y = tuneTrainData[,classCol],x = tuneTrainData[,featureColNames],
-                k = ranges,tunecontrol = tune.control(sampling = "fix"))
+    obj <- e1071::tune.knn(y = tuneTrainData[,classCol],x = tuneTrainData[,featureColNames],
+                k = ranges,tunecontrol = e1071::tune.control(sampling = "fix"))
   }
   if(!silent) print(summary(obj))
   if(!silent) plot(obj)

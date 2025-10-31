@@ -4,8 +4,15 @@
 \alias{DimensionRed}
 \title{Generic Dimensionallity Reduction Function}
 \usage{
-DimensionRed(Data, method = "MDS", selectedCols, outcome = NA,
-  plot = FALSE, silent = FALSE, ...)
+DimensionRed(
+  Data,
+  method = "MDS",
+  selectedCols,
+  outcome = NA,
+  plot = FALSE,
+  silent = FALSE,
+  ...
+)
 }
 \arguments{
 \item{Data}{(dataframe)  a data frame with variable/feature columns}

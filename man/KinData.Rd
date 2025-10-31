@@ -9,7 +9,9 @@ in the publication (Ansuini et al., 2015).The dataset was obtained by
 recording 15 naive participants performing reach-to-grasp movements towards 
 two differently sized objects:  a small object (i.e., hazelnut) and a 
 large object (i.e., grapefruit). The variables are as follows:}
-\format{A data frame with 848 rows and 121 variables}
+\format{
+A data frame with 848 rows and 121 variables
+}
 \usage{
 data(KinData)
 }

@@ -79,7 +79,8 @@
 #' 
 #' 
 #'
-#'@import e1071 ggplot2 plyr caret statmod
+#'@import plyr caret statmod ggplot2
+#'@importFrom e1071 svm tune
 #'
 #'@author
 #'Atesh Koul, C'MON unit, Istituto Italiano di Tecnologia
@@ -307,7 +308,7 @@ ClassPerm <- function(Data,classCol,selectedCols,classifierFun,nSims=1000,plot=T
 LinearSVM <- function(Data,classCol,selectedCols,SetSeed = T,silent,...){
   # a simplistic k-fold crossvalidation
   # For cross validation
-  #library(e1071)
+  #
   #set.seed(111)
   # defaults to 10 fold cross validation
   

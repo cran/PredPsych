@@ -4,11 +4,30 @@
 \alias{classifyFun}
 \title{Generic Classification Analyses}
 \usage{
-classifyFun(Data, classCol, selectedCols, cvType, ntrainTestFolds,
-  nTrainFolds, modelTrainFolds, nTuneFolds, tuneFolds, foldSep, cvFraction,
-  ranges = NULL, tune = FALSE, cost = 1, gamma = 0.5,
-  classifierName = "svm", genclassifier, silent = FALSE,
-  extendedResults = FALSE, SetSeed = TRUE, NewData = NULL, ...)
+classifyFun(
+  Data,
+  classCol,
+  selectedCols,
+  cvType,
+  ntrainTestFolds,
+  nTrainFolds,
+  modelTrainFolds,
+  nTuneFolds,
+  tuneFolds,
+  foldSep,
+  cvFraction,
+  ranges = NULL,
+  tune = FALSE,
+  cost = 1,
+  gamma = 0.5,
+  classifierName = "svm",
+  genclassifier,
+  silent = FALSE,
+  extendedResults = FALSE,
+  SetSeed = TRUE,
+  NewData = NULL,
+  ...
+)
 }
 \arguments{
 \item{Data}{(dataframe) dataframe of the data}

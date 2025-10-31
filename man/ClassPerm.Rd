@@ -4,8 +4,17 @@
 \alias{ClassPerm}
 \title{Permutation Analysis for classification}
 \usage{
-ClassPerm(Data, classCol, selectedCols, classifierFun, nSims = 1000,
-  plot = TRUE, silent = FALSE, progress_bar = progress_time(), ...)
+ClassPerm(
+  Data,
+  classCol,
+  selectedCols,
+  classifierFun,
+  nSims = 1000,
+  plot = TRUE,
+  silent = FALSE,
+  progress_bar = progress_time(),
+  ...
+)
 }
 \arguments{
 \item{Data}{(dataframe) dataframe of the data}
